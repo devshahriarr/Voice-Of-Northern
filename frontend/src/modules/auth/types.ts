@@ -6,7 +6,8 @@ export type UserRole =
     | 'COMPLAINT_OFFICER'
     | 'EVENT_MANAGER'
     | 'CONTENT_WRITER'
-    | 'GENERAL_MEMBER';[cite: 124 - 173]
+    // | 'GENERAL_MEMBER';[cite: 124 - 173]
+    | 'GENERAL_MEMBER';
 
 export interface UserSession {
     id: string;
