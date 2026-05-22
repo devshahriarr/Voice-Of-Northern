@@ -20,7 +20,7 @@ export default function PublicLayout({
     { label: "Gallery", href: "/gallery" },
     { label: "Complaint Feed", href: "/complaints" },
     { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" },
+    { label: "Contact", href: "/#contact" },
   ];
 
   return (
@@ -135,15 +135,38 @@ export default function PublicLayout({
 
       {/* Footer */}
       <footer className="mt-auto border-t border-slate-900 bg-slate-950 py-8">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-xs text-slate-500 font-sans">
-            © {new Date().getFullYear()} Voice of Northern. All rights reserved.
-          </span>
+        <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="flex flex-col gap-1.5 text-left">
+            <span className="text-xs text-slate-500 font-sans">
+              © {new Date().getFullYear()} Voice of Northern. All rights reserved.
+            </span>
+            <span className="text-[10px] text-slate-600 font-sans">
+              Designed & Developed by{" "}
+              <a
+                href="https://devshahriar.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-cyan-400/80 hover:text-cyan-400 transition-colors font-bold"
+              >
+                Md Shahriar Hossain Jihad
+              </a>
+              {" "}| Powered by{" "}
+              <a
+                href="https://inovetica.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-indigo-400/80 hover:text-indigo-400 transition-colors font-bold"
+              >
+                Inovetica
+              </a>
+            </span>
+          </div>
+
           <div className="flex gap-4">
             <Link href="/about" className="text-xs text-slate-500 hover:text-slate-400 cursor-pointer font-sans">
               About Us
             </Link>
-            <Link href="/contact" className="text-xs text-slate-500 hover:text-slate-400 cursor-pointer font-sans">
+            <Link href="/#contact" className="text-xs text-slate-500 hover:text-slate-400 cursor-pointer font-sans">
               Contact Us
             </Link>
           </div>

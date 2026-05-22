@@ -1,9 +1,11 @@
 'use client';
+
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { mockNotices } from '@/modules/notice/mock-notices';
 import { mockEvents } from '@/modules/event/mock-events';
 import { mockPosts } from '@/modules/content/mock-posts';
+import ContactSection from '@/components/ui/contact-section';
 
 export default function HomePage() {
   // Feed filtering tab: 'ALL' | 'NOTICES' | 'EVENTS' | 'BLOGS'
@@ -67,7 +69,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-cyan-500 selection:text-slate-950 overflow-x-hidden">
-      
+
       {/* Dynamic Background Gradients */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl pointer-events-none" />
@@ -75,20 +77,20 @@ export default function HomePage() {
       {/* 1. Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center pt-32 pb-24 px-4 md:px-8 border-b border-slate-900 bg-slate-950/20 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto grid gap-12 lg:grid-cols-12 items-center">
-          
+
           {/* Hero Content Left */}
           <div className="lg:col-span-7 space-y-6 text-left">
             <div className="flex items-center gap-3">
               <div className="h-12 w-12 rounded-xl overflow-hidden bg-slate-900 border border-slate-800 p-0.5 flex-shrink-0 shadow-lg shadow-cyan-500/10">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img 
-                  src="/logo/453619266_499885622592512_2893896085747641960_n.jpg" 
-                  alt="Voice of Northern Official Logo" 
+                <img
+                  src="/logo/453619266_499885622592512_2893896085747641960_n.jpg"
+                  alt="Voice of Northern Official Logo"
                   className="w-full h-full object-cover rounded-lg"
                 />
               </div>
               <span className="px-4 py-1 text-[11px] font-bold tracking-wider text-cyan-400 bg-cyan-950/50 border border-cyan-900/30 rounded-full uppercase">
-                Official Student Portal
+                Raise your voice, United for a better Northern
               </span>
             </div>
 
@@ -123,20 +125,20 @@ export default function HomePage() {
           <div className="lg:col-span-5 relative w-full aspect-[4/3] rounded-3xl overflow-hidden border border-slate-900 shadow-2xl">
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent z-10" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img 
-              src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200" 
+            <img
+              src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200"
               alt="Students Engaged in Active Academic Advocacy & Discussions"
               className="w-full h-full object-cover"
             />
-            
+
             {/* Overlay Info Card */}
             <div className="absolute bottom-6 left-6 right-6 z-20 bg-slate-900/80 backdrop-blur-md border border-slate-800 p-4 rounded-2xl flex items-center justify-between">
               <div className="space-y-1">
                 <span className="text-[9px] font-black uppercase text-cyan-400 tracking-widest">Active Resolution Desk</span>
                 <p className="text-xs font-bold text-white">Anonymity Guard Rails Deployed</p>
               </div>
-              <Link 
-                href="/complaints" 
+              <Link
+                href="/complaints"
                 className="px-3 py-1.5 bg-orange-500 hover:bg-orange-400 text-slate-950 font-bold text-[10px] uppercase rounded-lg transition-colors"
               >
                 File Grievance
@@ -161,11 +163,10 @@ export default function HomePage() {
               <button
                 key={tab}
                 onClick={() => setActiveFeedTab(tab)}
-                className={`px-4 py-2 text-xs font-bold rounded-lg whitespace-nowrap transition-all ${
-                  activeFeedTab === tab
-                    ? 'bg-cyan-400 text-slate-950 shadow-md shadow-cyan-400/10'
-                    : 'text-slate-400 hover:text-slate-200'
-                }`}
+                className={`px-4 py-2 text-xs font-bold rounded-lg whitespace-nowrap transition-all ${activeFeedTab === tab
+                  ? 'bg-cyan-400 text-slate-950 shadow-md shadow-cyan-400/10'
+                  : 'text-slate-400 hover:text-slate-200'
+                  }`}
               >
                 {tab === 'ALL' ? 'Show All' : tab === 'NOTICES' ? 'Notices' : tab === 'EVENTS' ? 'Events' : 'Magazine & Blogs'}
               </button>
@@ -175,20 +176,18 @@ export default function HomePage() {
 
         {/* Feed Cards Grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          
+
           {/* Notices */}
           {(activeFeedTab === 'ALL' || activeFeedTab === 'NOTICES') && mockNotices.map(notice => (
-            <div 
-              key={notice.id} 
-              className={`bg-slate-900/30 border p-5 rounded-2xl flex flex-col justify-between hover:border-slate-800 transition-all ${
-                notice.priority === 'URGENT' ? 'border-orange-500/20 bg-gradient-to-br from-slate-900/20 to-orange-950/10' : 'border-slate-900'
-              }`}
+            <div
+              key={notice.id}
+              className={`bg-slate-900/30 border p-5 rounded-2xl flex flex-col justify-between hover:border-slate-800 transition-all ${notice.priority === 'URGENT' ? 'border-orange-500/20 bg-gradient-to-br from-slate-900/20 to-orange-950/10' : 'border-slate-900'
+                }`}
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className={`px-2 py-0.5 text-[9px] font-black rounded border uppercase ${
-                    notice.priority === 'URGENT' ? 'bg-red-500/10 text-red-400 border-red-500/20' : 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20'
-                  }`}>
+                  <span className={`px-2 py-0.5 text-[9px] font-black rounded border uppercase ${notice.priority === 'URGENT' ? 'bg-red-500/10 text-red-400 border-red-500/20' : 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20'
+                    }`}>
                     {notice.priority} Notice
                   </span>
                   <span className="text-[10px] text-slate-500 font-mono">{new Date(notice.publishedAt).toLocaleDateString()}</span>
@@ -206,37 +205,30 @@ export default function HomePage() {
 
           {/* Events */}
           {(activeFeedTab === 'ALL' || activeFeedTab === 'EVENTS') && mockEvents.map(event => (
-            <div 
-              key={event.id} 
+            <div
+              key={event.id}
               className="bg-slate-900/30 border border-slate-900 hover:border-slate-800 rounded-2xl overflow-hidden flex flex-col justify-between hover:scale-[1.01] transition-all"
             >
               <div className="h-44 bg-slate-950 relative overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={event.bannerImage} alt={event.title} className="w-full h-full object-cover" />
-                <span className="absolute top-3 right-3 px-2 py-0.5 text-[9px] font-black uppercase bg-slate-950/80 border border-slate-800 text-cyan-400 rounded">
+                <img src={event.bannerImage} alt="" className="w-full h-full object-cover" />
+                <span className="absolute top-3 left-3 px-2 py-0.5 text-[8px] font-black uppercase tracking-widest bg-cyan-950 border border-cyan-800 text-cyan-400 rounded">
                   {event.type}
                 </span>
               </div>
 
-              <div className="p-5 space-y-4">
-                <div className="space-y-1">
-                  <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">{event.category}</span>
-                  <h4 className="text-sm font-bold text-white line-clamp-1">{event.title}</h4>
-                  <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">{event.description}</p>
-                </div>
-
-                <div className="space-y-1 text-[11px] text-slate-400 bg-slate-950/50 p-2.5 rounded-xl border border-slate-900/40">
-                  <div>📍 Venue: {event.location}</div>
-                  <div>📅 Date: {new Date(event.eventDate).toLocaleDateString()}</div>
-                </div>
+              <div className="p-5 space-y-2 flex-1">
+                <span className="text-[9px] text-slate-500 font-bold font-mono">📅 {new Date(event.eventDate).toLocaleDateString()} • {event.location}</span>
+                <h3 className="text-sm font-bold text-white leading-snug line-clamp-1">{event.title}</h3>
+                <p className="text-xs text-slate-400 leading-relaxed line-clamp-2">{event.description}</p>
               </div>
 
               <div className="p-5 pt-0">
-                <Link 
+                <Link
                   href={`/event/${event.id}`}
                   className="w-full text-center py-2 bg-slate-900 hover:bg-slate-850 text-slate-300 font-bold border border-slate-800 rounded-xl text-xs block transition-all"
                 >
-                  Register / Get Pass
+                  Join Campaign
                 </Link>
               </div>
             </div>
@@ -244,33 +236,26 @@ export default function HomePage() {
 
           {/* Blogs */}
           {(activeFeedTab === 'ALL' || activeFeedTab === 'BLOGS') && mockPosts.map(post => (
-            <div 
-              key={post.id} 
+            <div
+              key={post.id}
               className="bg-slate-900/30 border border-slate-900 hover:border-slate-800 rounded-2xl overflow-hidden flex flex-col justify-between hover:scale-[1.01] transition-all"
             >
               <div className="h-44 bg-slate-950 relative overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover" />
-                <span className="absolute top-3 right-3 px-2 py-0.5 text-[9px] font-black uppercase bg-slate-950/80 border border-slate-800 text-purple-400 rounded">
+                <img src={post.coverImage || 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600'} alt="" className="w-full h-full object-cover" />
+                <span className="absolute top-3 left-3 px-2 py-0.5 text-[8px] font-black uppercase tracking-widest bg-orange-950 border border-orange-900 text-orange-400 rounded">
                   {post.type}
                 </span>
               </div>
 
-              <div className="p-5 space-y-4">
-                <div className="space-y-1">
-                  <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">{post.category}</span>
-                  <h4 className="text-sm font-bold text-white line-clamp-1">{post.title}</h4>
-                  <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">{post.content}</p>
-                </div>
-
-                <div className="flex justify-between items-center text-[10px] text-slate-500 border-t border-slate-900/60 pt-3">
-                  <span>Author: {post.author.name}</span>
-                  <span>{new Date(post.createdAt).toLocaleDateString()}</span>
-                </div>
+              <div className="p-5 space-y-2 flex-1">
+                <span className="text-[9px] text-slate-500 font-bold font-mono">✍️ BY {post.author.name} • {post.category}</span>
+                <h3 className="text-sm font-bold text-white leading-snug line-clamp-1">{post.title}</h3>
+                <p className="text-xs text-slate-400 leading-relaxed line-clamp-2">{post.content.replace(/<[^>]*>/g, '')}</p>
               </div>
 
               <div className="p-5 pt-0">
-                <Link 
+                <Link
                   href={`/blogs/${post.slug}`}
                   className="w-full text-center py-2 bg-slate-900 hover:bg-slate-850 text-slate-300 font-bold border border-slate-800 rounded-xl text-xs block transition-all"
                 >
@@ -286,14 +271,14 @@ export default function HomePage() {
       {/* 3. Achievements & Impact Section */}
       <section className="bg-slate-900/10 border-t border-b border-slate-900 py-20">
         <div className="max-w-7xl mx-auto px-4 md:px-8 grid gap-12 lg:grid-cols-12 items-center">
-          
+
           {/* Success Story / Testimonials Left */}
           <div className="lg:col-span-7 space-y-6">
-            <span className="px-4 py-1 text-[11px] font-bold tracking-wider text-orange-400 bg-orange-950/30 border border-orange-900/20 rounded-full uppercase">
+            <span className="inline-block px-4 py-1 text-[11px] font-bold tracking-wider text-orange-400 bg-orange-950/30 border border-orange-900/20 rounded-full uppercase mb-1">
               Student Testimonials
             </span>
 
-            <h2 className="text-3xl font-black text-white tracking-tight leading-none">
+            <h2 className="text-3xl font-black text-white tracking-tight leading-snug">
               Success Stories & Community Impact
             </h2>
 
@@ -303,13 +288,13 @@ export default function HomePage() {
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed italic">
                 {testimonials[activeTestimonial].quote}
               </p>
-              
+
               <div className="flex items-center gap-3 pt-2">
                 <div className="h-10 w-10 rounded-full overflow-hidden border border-slate-850">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img 
-                    src={testimonials[activeTestimonial].avatar} 
-                    alt={testimonials[activeTestimonial].name} 
+                  <img
+                    src={testimonials[activeTestimonial].avatar}
+                    alt={testimonials[activeTestimonial].name}
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -326,9 +311,8 @@ export default function HomePage() {
                 <button
                   key={t.id}
                   onClick={() => setActiveTestimonial(idx)}
-                  className={`h-2.5 rounded-full transition-all ${
-                    activeTestimonial === idx ? 'w-8 bg-cyan-400' : 'w-2.5 bg-slate-800'
-                  }`}
+                  className={`h-2.5 rounded-full transition-all ${activeTestimonial === idx ? 'w-8 bg-cyan-400' : 'w-2.5 bg-slate-800'
+                    }`}
                 />
               ))}
             </div>
@@ -337,7 +321,7 @@ export default function HomePage() {
           {/* Telemetry Progress Counters Right */}
           <div className="lg:col-span-5 space-y-5">
             <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest">Quantifying Campaign Impact</h3>
-            
+
             <div className="space-y-4">
               {stats.map((stat, idx) => (
                 <div key={idx} className="bg-slate-950 p-4 rounded-xl border border-slate-900 space-y-2">
@@ -360,17 +344,17 @@ export default function HomePage() {
 
       {/* 4. Dedicated Team Section */}
       <section className="max-w-7xl mx-auto px-4 md:px-8 py-20 space-y-12">
-        <div className="text-center max-w-2xl mx-auto space-y-2">
-          <span className="px-4 py-1 text-[11px] font-bold tracking-wider text-cyan-400 bg-cyan-950/30 border border-cyan-900/20 rounded-full uppercase">
+        <div className="text-center max-w-2xl mx-auto space-y-3">
+          <span className="inline-block px-4 py-1 text-[11px] font-bold tracking-wider text-cyan-400 bg-cyan-950/30 border border-cyan-900/20 rounded-full uppercase mb-1">
             MEET THE ADVOCATES
           </span>
-          <h2 className="text-2xl md:text-3xl font-extrabold text-white">Leadership Behind The Voice</h2>
-          <p className="text-xs text-slate-400">Student operators and executive directors working round the clock to ensure student queries are verified.</p>
+          <h2 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">Leadership Behind The Voice</h2>
+          <p className="text-xs text-slate-400 leading-relaxed">Student operators and executive directors working round the clock to ensure student queries are verified.</p>
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {team.map((member, idx) => (
-            <div 
+            <div
               key={idx}
               className="bg-slate-900/20 border border-slate-900 hover:border-slate-800 rounded-2xl overflow-hidden hover:scale-[1.01] transition-all flex flex-col justify-between"
             >
@@ -390,13 +374,13 @@ export default function HomePage() {
               </div>
 
               <div className="p-5 pt-0 border-t border-slate-900/60 mt-3 flex items-center justify-between">
-                <Link 
-                  href="/about" 
+                <Link
+                  href="/about"
                   className="text-xs font-bold text-slate-400 hover:text-cyan-400 hover:underline"
                 >
                   View Bio & Activity
                 </Link>
-                <span className="text-[9px] text-slate-600 font-bold font-mono">VON LEADER</span>
+                <span className="text-[9px] text-slate-650 font-bold font-mono">VON LEADER</span>
               </div>
             </div>
           ))}
@@ -404,24 +388,24 @@ export default function HomePage() {
       </section>
 
       {/* 5. Footer CTA Banner */}
-      <section className="max-w-7xl mx-auto px-4 md:px-8 pb-20">
+      <section className="max-w-7xl mx-auto px-4 md:px-8 pb-16">
         <div className="bg-gradient-to-r from-cyan-950/40 via-indigo-950/20 to-slate-950 border border-cyan-900/20 p-8 md:p-12 rounded-3xl text-center space-y-6 relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.05),transparent)] pointer-events-none" />
-          
+
           <h2 className="text-3xl font-black text-white leading-tight">Ready to shape a fairer campus?</h2>
           <p className="text-slate-400 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
             Create an official verified student account, sign petitions, and submit institutional queries with the safety of our Anonymity Vault.
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center">
-            <Link 
-              href="/register" 
+            <Link
+              href="/register"
               className="px-6 py-3 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black rounded-xl text-xs uppercase transition-all"
             >
               Become a Member
             </Link>
-            <Link 
-              href="/complaints" 
+            <Link
+              href="/complaints"
               className="px-6 py-3 bg-slate-900 hover:bg-slate-850 text-slate-300 font-bold border border-slate-800 rounded-xl text-xs uppercase transition-all"
             >
               File Anonymous Case
@@ -429,6 +413,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* 6. Contact Section */}
+      <ContactSection />
 
     </div>
   );
