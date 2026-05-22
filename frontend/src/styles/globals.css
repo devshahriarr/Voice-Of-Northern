@@ -1,0 +1,48 @@
+@import "tailwindcss";
+@config "../../tailwind.config.js";
+
+@theme {
+  --font-sans: var(--font-outfit), sans-serif;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    /* Use high-legibility rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  body {
+    background-color: var(--color-navy-950);
+    color: #f1f5f9; /* Slate-100 */
+    font-family: var(--font-sans);
+  }
+
+  /* Accessible focus-visible state across interactive elements */
+  *:focus-visible {
+    outline: 2px solid var(--color-glow-500);
+    outline-offset: 2px;
+  }
+
+  /* Custom styled scrollbars for Dark Mode first design */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-navy-950);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-navy-800);
+    border: 2px solid var(--color-navy-950);
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-glow-500);
+  }
+}
