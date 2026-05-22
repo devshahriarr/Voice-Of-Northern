@@ -27,7 +27,7 @@ export default function PublicEventsPage() {
                         {['ALL', 'FREE', 'OPEN_CONTRIBUTION', 'PAID'].map((tab) => (
                             <button
                                 key={tab}
-                                onClick={() => setActiveTab(tab as any)}
+                                onClick={() => setActiveTab(tab as EventType | 'ALL')}
                                 className={`px-4 py-2 text-xs font-bold rounded-xl border transition-all ${activeTab === tab
                                         ? 'bg-cyan-400 text-slate-950 border-cyan-400'
                                         : 'bg-slate-900/40 text-slate-400 border-slate-900 hover:border-slate-800'
