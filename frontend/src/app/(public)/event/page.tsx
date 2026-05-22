@@ -64,7 +64,7 @@ export default function PublicEventsPage() {
                                         <span>📍 {event.location}</span>
                                     </div>
                                     <Link
-                                        href={`/events/${event.id}`}
+                                        href={`/event/${event.id}`}
                                         className="w-full mt-1 py-2.5 text-center bg-cyan-400 text-slate-950 font-bold rounded-xl hover:bg-cyan-300 transition-all block text-xs shadow-md shadow-cyan-400/5"
                                     >
                                         Join / Register Now

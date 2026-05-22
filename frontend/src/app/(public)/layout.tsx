@@ -24,6 +24,12 @@ export default function PublicLayout({
             <Link href="/" className="hover:text-glow-500 transition-colors">
               Home
             </Link>
+            <Link href="/event" className="hover:text-glow-500 transition-colors">
+              Events
+            </Link>
+            <Link href="/blogs" className="hover:text-glow-500 transition-colors">
+              Blogs
+            </Link>
             <Link href="/about" className="hover:text-glow-500 transition-colors">
               About
             </Link>

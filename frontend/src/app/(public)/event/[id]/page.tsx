@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { mockEvents } from '@/modules/event/mock-events';
 import { notFound } from 'next/navigation';
 
-export default function PublicEventRegistrationFormPage({ params }: { params: { id: string } }) {
-    const event = mockEvents.find(e => e.id === params.id);
+export default function PublicEventRegistrationFormPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = React.use(params);
+    const event = mockEvents.find(e => e.id === id);
 
     // Public user identification parameters (Mandatory since registration doesn't require site login)
     const [guestInfo, setGuestInfo] = useState({
@@ -39,8 +40,8 @@ export default function PublicEventRegistrationFormPage({ params }: { params: { 
                     <p className="text-xs text-slate-400 leading-relaxed">
                         Thank you, <span className="text-slate-200 font-bold">{guestInfo.fullName}</span>.{' '}
                         {requiresPayment
-                            ? 'Our event manager role will verify your manual transaction index matching the reference ID. Expect verification feedback via email soon.'[cite: 154, 330]
-              : 'Your ticket assignment is verified. An official seat confirmation log has been pushed to your email.'}
+                            ? 'Our event manager role will verify your manual transaction index matching the reference ID. Expect verification feedback via email soon.'
+                            : 'Your ticket assignment is verified. An official seat confirmation log has been pushed to your email.'}
                     </p>
                 </div>
             </div>
@@ -160,7 +161,7 @@ export default function PublicEventRegistrationFormPage({ params }: { params: { 
                                 </div>
 
                                 <div className="space-y-1">
-                                    <label className="text-[11px] font-semibold text-slate-400">Transaction ID (TxnID) [cite: 323-324]</label>
+                                    <label className="text-[11px] font-semibold text-slate-400">Transaction ID (TxnID)</label>
                                     <input
                                         type="text" required
                                         className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-cyan-500 transition-colors font-mono tracking-wide"
@@ -171,7 +172,7 @@ export default function PublicEventRegistrationFormPage({ params }: { params: { 
                                 </div>
 
                                 <div className="space-y-1">
-                                    <label className="text-[11px] font-semibold text-slate-400">Upload Receipt Screenshot (Optional) [cite: 326]</label>
+                                    <label className="text-[11px] font-semibold text-slate-400">Upload Receipt Screenshot (Optional)</label>
                                     <div className="border border-dashed border-slate-800 rounded-xl p-2.5 bg-slate-950 text-center text-[10px] text-slate-500 cursor-pointer">
                                         <input type="file" accept="image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={(e) => e.target.files && setScreenshot(e.target.files[0])} />
                                         <span>{screenshot ? `Ready: ${screenshot.name}` : 'Click to bind optional verification snapshot'}</span>

@@ -104,7 +104,7 @@ export default function HomePage() {
                                 </div>
                                 <div className="flex items-center justify-between pt-2 border-t border-slate-900 text-[11px] text-slate-500">
                                     <span>📍 {event.location}</span>
-                                    <Link href={`/events/${event.id}`} className="text-xs font-semibold text-cyan-400 hover:text-cyan-300 transition-colors">
+                                    <Link href={`/event/${event.id}`} className="text-xs font-semibold text-cyan-400 hover:text-cyan-300 transition-colors">
                                         Register →
                                     </Link>
                                 </div>
