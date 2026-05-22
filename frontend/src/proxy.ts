@@ -5,9 +5,9 @@ export function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
     // Custom mock token verification concept (To be synced with JWT token cookie parsing)
-    const isAuthenticated = request.cookies.has('von_session_token');
+    // const isAuthenticated = request.cookies.has('von_session_token');
 
-    // Guard rails for protected dashboards [cite: 241]
+    // Guard rails for protected dashboards
     if (pathname.startsWith('/admin') || pathname.startsWith('/dashboard')) {
         // if (!isAuthenticated) {
         //     // Direct redirection toward secure login screen

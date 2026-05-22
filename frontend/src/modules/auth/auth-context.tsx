@@ -1,6 +1,6 @@
 'react';
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { AuthState, UserSession, UserRole } from './types';
+import { AuthState, UserSession } from './types';
 
 interface AuthContextType extends AuthState {
     login: (token: string, user: UserSession) => void;
@@ -16,37 +16,46 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isLoading: true,
     });
 
-    useEffect(() => {
-        // Client-side token checking from LocalStorage or HttpOnly cookies mock logic
-        const storedToken = localStorage.getItem('von_token');
-        const storedUser = localStorage.getItem('von_user');
-
-        if (storedToken && storedUser) {
-            try {
-                setState({
-                    token: storedToken,
-                    user: JSON.parse(storedUser),
-                    isLoading: false,
-                });
-            } catch {
-                logout();
-            }
-        } else {
-            setState((prev) => ({ ...prev, isLoading: false }));
-        }
-    }, []);
-
     const login = (token: string, user: UserSession) => {
         localStorage.setItem('von_token', token);
         localStorage.setItem('von_user', JSON.stringify(user));
-        setState({ token, user, isLoading: false });
+        setState((prev) => ({ ...prev, token, user, isLoading: false }));
     };
 
     const logout = () => {
         localStorage.removeItem('von_token');
         localStorage.removeItem('von_user');
-        setState({ token: null, user: null, isLoading: false });
+        setState((prev) => ({ ...prev, token: null, user: null, isLoading: false }));
     };
+
+    useEffect(() => {
+        // Client-side token checking from LocalStorage or HttpOnly cookies mock logic
+        const storedToken = localStorage.getItem('von_token');
+        const storedUser = localStorage.getItem('von_user');
+
+        const handleAuthInit = () => {
+            if (storedToken && storedUser) {
+                try {
+                    const parsedUser = JSON.parse(storedUser);
+                    setState((prev) => ({
+                        ...prev,
+                        token: storedToken,
+                        user: parsedUser,
+                        isLoading: false,
+                    }));
+                } catch {
+                    logout();
+                }
+            } else {
+                setState((prev) => ({ ...prev, isLoading: false }));
+            }
+        };
+
+        // Defer state update to prevent cascading synchronous renders in effect body
+        const timer = setTimeout(handleAuthInit, 0);
+
+        return () => clearTimeout(timer);
+    }, []);
 
     return (
         <AuthContext.Provider value={{ ...state, login, logout }}>
