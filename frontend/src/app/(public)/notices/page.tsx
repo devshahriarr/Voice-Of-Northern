@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { mockNotices } from '@/modules/notice/mock-notices';
 
 export default function NoticesPage() {
@@ -87,8 +88,8 @@ export default function NoticesPage() {
                 </span>
               </div>
 
-              <h3 className="text-lg font-bold text-white mb-2 leading-snug">
-                {notice.title}
+              <h3 className="text-lg font-bold text-white mb-2 leading-snug hover:text-cyan-400 transition-colors">
+                <Link href={`/notices/${notice.id}`}>{notice.title}</Link>
               </h3>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed whitespace-pre-wrap">
                 {notice.content}

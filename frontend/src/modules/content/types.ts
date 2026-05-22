@@ -15,6 +15,7 @@ export interface BlogPost {
     pdfUrl?: string;
     author: PostAuthor;
     tags: string[];
+    likes?: number;
     createdAt: string;
     updatedAt: string;
 }

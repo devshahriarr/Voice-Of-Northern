@@ -202,7 +202,7 @@ export default function AdminComplaintsPage() {
                           <span className="text-amber-500" title="Protected Identity">🔒</span>
                           {isUnlocked ? (
                             <span className="text-[10px] text-red-400 font-bold bg-red-950/30 px-2 py-0.5 rounded border border-red-900/30">
-                              Decrypted: Fahim (2022-2-60-089)
+                              Decrypted: {complaint.submittedBy?.name || 'Fahim'} ({complaint.submittedBy?.studentId || '2022-2-60-089'})
                             </span>
                           ) : (
                             <button
@@ -327,8 +327,11 @@ export default function AdminComplaintsPage() {
                       </div>
                       {unlockedCaseIds[selectedComplaint.id] ? (
                         <div className="space-y-1 bg-red-950/20 border border-red-900/30 p-2.5 rounded-lg text-[11px]">
-                          <div className="text-red-400 font-bold">Fahim Rahman</div>
-                          <div className="text-slate-400 font-mono">ID: 2022-2-60-089</div>
+                          <div className="text-red-400 font-bold">{selectedComplaint.submittedBy?.name || 'Fahim Rahman'}</div>
+                          <div className="text-slate-400 font-mono">ID: {selectedComplaint.submittedBy?.studentId || '2022-2-60-089'}</div>
+                          {selectedComplaint.submittedBy?.department && (
+                            <div className="text-slate-505 font-mono">Dept: {selectedComplaint.submittedBy.department}</div>
+                          )}
                         </div>
                       ) : (
                         <button

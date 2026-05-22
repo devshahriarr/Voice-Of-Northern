@@ -1,7 +1,10 @@
 'use client';
+
 import React, { useState } from 'react';
 import { mockEvents as initialEvents } from '@/modules/event/mock-events';
 import { Event } from '@/modules/event/types';
+import FileUpload from '@/components/ui/file-upload';
+import { sanitizeString } from '@/modules/validation/schemas';
 
 interface ExtendedEvent extends Event {
   isDeleted?: boolean;
@@ -72,7 +75,7 @@ export default function AdminEventsPage() {
   const [events, setEvents] = useState<ExtendedEvent[]>(initialEvents);
   const [registrations, setRegistrations] = useState<TicketRegistration[]>(initialRegistrations);
 
-  // New Event Form Launcher State
+  // New Event Form State
   const [newEvent, setNewEvent] = useState({
     title: '',
     description: '',
@@ -94,13 +97,15 @@ export default function AdminEventsPage() {
 
   const handleAddEventSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!newEvent.title.trim() || !newEvent.description.trim()) return;
+
     const eventId = `evt-${Date.now()}`;
     const newObj: ExtendedEvent = {
       id: eventId,
-      title: newEvent.title,
-      description: newEvent.description,
+      title: sanitizeString(newEvent.title),
+      description: sanitizeString(newEvent.description),
       eventDate: newEvent.eventDate,
-      location: newEvent.location,
+      location: sanitizeString(newEvent.location),
       type: newEvent.type,
       price: newEvent.type === 'PAID' ? Number(newEvent.price) : undefined,
       category: newEvent.category,
@@ -148,7 +153,7 @@ export default function AdminEventsPage() {
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
+    <div className="space-y-6 max-w-7xl mx-auto animate-fade-in font-sans">
       {/* Header */}
       <div className="border-b border-slate-900 pb-5">
         <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-white">
@@ -162,7 +167,7 @@ export default function AdminEventsPage() {
       <div className="grid gap-8 lg:grid-cols-12 items-start">
         {/* Left Panel: Event Form & Listings */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="bg-slate-900/30 border border-slate-900 rounded-2xl p-5 space-y-4">
+          <div className="bg-slate-900/30 border border-slate-900 rounded-3xl p-5 space-y-4">
             <h2 className="text-sm font-black text-white uppercase tracking-wider border-b border-slate-800 pb-2">
               New Event Launcher
             </h2>
@@ -174,7 +179,7 @@ export default function AdminEventsPage() {
                   type="text"
                   required
                   placeholder="e.g. General Assembly"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-cyan-500"
+                  className="w-full bg-slate-950 border border-slate-850 rounded-xl px-3 py-2 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-cyan-500 transition-colors"
                   value={newEvent.title}
                   onChange={e => setNewEvent({ ...newEvent, title: e.target.value })}
                 />
@@ -186,7 +191,7 @@ export default function AdminEventsPage() {
                   required
                   rows={2}
                   placeholder="Enter details..."
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-cyan-500 resize-none"
+                  className="w-full bg-slate-950 border border-slate-850 rounded-xl px-3 py-2 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-cyan-500 resize-none font-sans"
                   value={newEvent.description}
                   onChange={e => setNewEvent({ ...newEvent, description: e.target.value })}
                 />
@@ -198,7 +203,7 @@ export default function AdminEventsPage() {
                   <input
                     type="datetime-local"
                     required
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-cyan-500"
+                    className="w-full bg-slate-950 border border-slate-850 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-cyan-500"
                     value={newEvent.eventDate}
                     onChange={e => setNewEvent({ ...newEvent, eventDate: e.target.value })}
                   />
@@ -209,7 +214,7 @@ export default function AdminEventsPage() {
                     type="text"
                     required
                     placeholder="e.g. Main Auditorium"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-cyan-500"
+                    className="w-full bg-slate-950 border border-slate-850 rounded-xl px-3 py-2 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-cyan-500 transition-colors"
                     value={newEvent.location}
                     onChange={e => setNewEvent({ ...newEvent, location: e.target.value })}
                   />
@@ -220,7 +225,7 @@ export default function AdminEventsPage() {
                 <div className="space-y-1">
                   <label className="font-bold text-slate-300">Type Selection</label>
                   <select
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-cyan-500"
+                    className="w-full bg-slate-950 border border-slate-850 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-cyan-500"
                     value={newEvent.type}
                     onChange={e => setNewEvent({ ...newEvent, type: e.target.value as 'FREE' | 'PAID' | 'OPEN_CONTRIBUTION' })}
                   >
@@ -237,7 +242,7 @@ export default function AdminEventsPage() {
                       type="number"
                       required
                       placeholder="e.g. 250"
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-cyan-500"
+                      className="w-full bg-slate-950 border border-slate-850 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-cyan-500"
                       value={newEvent.price}
                       onChange={e => setNewEvent({ ...newEvent, price: e.target.value })}
                     />
@@ -245,33 +250,14 @@ export default function AdminEventsPage() {
                 )}
               </div>
 
-              <div className="space-y-1 text-xs">
-                <label className="font-bold text-slate-350">Upload Event Banner Image (Max 5MB)</label>
-                <div className="relative border border-dashed border-slate-800 rounded-xl p-3 bg-slate-950 text-center text-[10px] text-slate-500 cursor-pointer">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="absolute inset-0 opacity-0 cursor-pointer"
-                    onChange={e => {
-                      const file = e.target.files?.[0];
-                      if (file) {
-                        if (file.size > 5 * 1024 * 1024) {
-                          alert('File size exceeds the 5MB limit.');
-                          return;
-                        }
-                        if (!file.type.startsWith('image/')) {
-                          alert('Only image files are allowed.');
-                          return;
-                        }
-                        setNewEvent(prev => ({
-                          ...prev,
-                          bannerImage: URL.createObjectURL(file)
-                        }));
-                      }
-                    }}
-                  />
-                  <span>{newEvent.bannerImage.startsWith('blob:') ? '✓ Loaded Local Image File' : 'Click to bind banner snapshot'}</span>
-                </div>
+              {/* Reusable FileUpload widget */}
+              <div className="space-y-1">
+                <FileUpload
+                  accept="image/*"
+                  maxSizeMB={5}
+                  label="Upload Event Banner Image"
+                  onUploadSuccess={url => setNewEvent(prev => ({ ...prev, bannerImage: url }))}
+                />
               </div>
 
               <button
@@ -329,8 +315,8 @@ export default function AdminEventsPage() {
 
         {/* Right Panel: Transaction Auditor */}
         <div className="lg:col-span-7 space-y-4">
-          <div className="bg-slate-900/30 border border-slate-900 rounded-2xl p-5 space-y-4">
-            <h2 className="text-sm font-black text-white uppercase tracking-wider border-b border-slate-800 pb-2">
+          <div className="bg-slate-900/30 border border-slate-900 rounded-3xl p-5 space-y-4">
+            <h2 className="text-sm font-black text-white uppercase tracking-wider border-b border-slate-880 pb-2">
               Manual Transaction Auditor
             </h2>
 
@@ -338,7 +324,7 @@ export default function AdminEventsPage() {
               {registrations.map(reg => (
                 <div
                   key={reg.id}
-                  className={`bg-slate-950/60 border border-slate-900 p-4 rounded-xl space-y-3 hover:border-slate-800 transition-all ${
+                  className={`bg-slate-950/60 border border-slate-900 p-4 rounded-2xl space-y-3 hover:border-slate-800 transition-all ${
                     reg.isDeleted ? 'opacity-40 line-through bg-slate-950/40' : ''
                   }`}
                 >
@@ -431,7 +417,7 @@ export default function AdminEventsPage() {
           onClick={() => setSelectedScreenshot(null)}
         >
           <div
-            className="relative w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3"
+            className="relative w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-4 space-y-3"
             onClick={e => e.stopPropagation()}
           >
             <div className="flex justify-between items-center border-b border-slate-800 pb-2">

@@ -1,6 +1,9 @@
 'use client';
+
 import React, { useState } from 'react';
 import { mockGalleryItems, GalleryItem } from '@/modules/gallery/mock-gallery';
+import FileUpload from '@/components/ui/file-upload';
+import { sanitizeString } from '@/modules/validation/schemas';
 
 export default function AdminGalleryManagementPage() {
   const [gallery, setGallery] = useState<GalleryItem[]>(mockGalleryItems);
@@ -10,7 +13,6 @@ export default function AdminGalleryManagementPage() {
   const [imageUrl, setImageUrl] = useState('');
   const [category, setCategory] = useState<'CAMPAIGN' | 'PROTEST' | 'SEMINAR' | 'COMMUNITY'>('COMMUNITY');
   const [description, setDescription] = useState('');
-
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleAddPhoto = (e: React.FormEvent) => {
@@ -21,10 +23,10 @@ export default function AdminGalleryManagementPage() {
 
     const freshItem: GalleryItem = {
       id: `gal-${Date.now()}`,
-      title,
+      title: sanitizeString(title),
       imageUrl,
       category,
-      description,
+      description: sanitizeString(description),
       uploadedAt: new Date().toISOString()
     };
 
@@ -48,7 +50,7 @@ export default function AdminGalleryManagementPage() {
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
+    <div className="space-y-6 max-w-7xl mx-auto animate-fade-in font-sans">
       
       {/* Header */}
       <div className="border-b border-slate-900 pb-5">
@@ -63,7 +65,7 @@ export default function AdminGalleryManagementPage() {
       <div className="grid gap-6 lg:grid-cols-12 items-start">
         
         {/* Left Side: Upload Form */}
-        <div className="lg:col-span-4 bg-slate-900/30 border border-slate-900 rounded-2xl p-5 space-y-4">
+        <div className="lg:col-span-4 bg-slate-900/30 border border-slate-900 rounded-3xl p-5 space-y-4">
           <h2 className="text-sm font-black text-white uppercase tracking-wider border-b border-slate-850 pb-2">
             Upload Image Asset
           </h2>
@@ -75,28 +77,26 @@ export default function AdminGalleryManagementPage() {
                 type="text"
                 required
                 placeholder="e.g. Student general assembly..."
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500"
+                className="w-full bg-slate-950 border border-slate-850 rounded-xl px-3.5 py-2.5 text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500 transition-colors"
                 value={title}
                 onChange={e => setTitle(e.target.value)}
               />
             </div>
 
+            {/* Reusable FileUpload widget */}
             <div className="space-y-1">
-              <label className="font-bold text-slate-350">Image URL Path</label>
-              <input
-                type="text"
-                required
-                placeholder="e.g. https://images.unsplash.com/photo..."
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500"
-                value={imageUrl}
-                onChange={e => setImageUrl(e.target.value)}
+              <FileUpload
+                accept="image/*"
+                maxSizeMB={5}
+                label="Direct Image Upload"
+                onUploadSuccess={url => setImageUrl(url)}
               />
             </div>
 
             <div className="space-y-1">
               <label className="font-bold text-slate-350">Album Classification</label>
               <select
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-slate-300 focus:outline-none"
+                className="w-full bg-slate-950 border border-slate-850 rounded-xl px-3 py-2 text-slate-350 focus:outline-none"
                 value={category}
                 onChange={e => setCategory(e.target.value as any)}
               >
@@ -112,7 +112,7 @@ export default function AdminGalleryManagementPage() {
               <textarea
                 rows={3}
                 placeholder="Brief caption describing the event details..."
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white placeholder-slate-650 focus:outline-none leading-relaxed font-sans"
+                className="w-full bg-slate-950 border border-slate-850 rounded-xl p-3 text-white placeholder-slate-650 focus:outline-none leading-relaxed font-sans"
                 value={description}
                 onChange={e => setDescription(e.target.value)}
               />
@@ -121,7 +121,7 @@ export default function AdminGalleryManagementPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-2.5 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black rounded-xl uppercase tracking-wider text-[11px] transition-colors"
+              className="w-full py-2.5 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black rounded-xl uppercase tracking-wider text-[10px] transition-colors"
             >
               {isSubmitting ? 'Uploading Asset...' : 'Upload to Gallery'}
             </button>
@@ -129,7 +129,7 @@ export default function AdminGalleryManagementPage() {
         </div>
 
         {/* Right Side: Media Asset List */}
-        <div className="lg:col-span-8 bg-slate-900/10 border border-slate-900 rounded-2xl p-5 space-y-4">
+        <div className="lg:col-span-8 bg-slate-900/10 border border-slate-900 rounded-3xl p-5 space-y-4">
           <h2 className="text-sm font-black text-white uppercase tracking-wider border-b border-slate-850 pb-2">
             Platform Media Library
           </h2>
@@ -138,7 +138,7 @@ export default function AdminGalleryManagementPage() {
             {gallery.map(item => (
               <div
                 key={item.id}
-                className="bg-slate-950 border border-slate-900 rounded-xl overflow-hidden flex flex-col justify-between"
+                className="bg-slate-950 border border-slate-900 rounded-2xl overflow-hidden flex flex-col justify-between"
               >
                 <div className="relative aspect-[16/10] bg-slate-900">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -154,13 +154,13 @@ export default function AdminGalleryManagementPage() {
                     <p className="text-[10px] text-slate-500 line-clamp-2 leading-relaxed">{item.description}</p>
                   </div>
 
-                  <div className="flex justify-between items-center pt-2.5 border-t border-slate-900/60 mt-2">
-                    <span className="text-[9px] text-slate-650 font-mono">
+                  <div className="flex justify-between items-center pt-2.5 border-t border-slate-900/65 mt-2 text-[10px]">
+                    <span className="text-slate-500 font-mono">
                       {new Date(item.uploadedAt).toLocaleDateString()}
                     </span>
                     <button
                       onClick={() => handleDeletePhoto(item.id)}
-                      className="px-2 py-1 bg-red-950/40 border border-red-900/30 hover:bg-red-950 text-red-400 font-bold rounded text-[9px] uppercase transition-colors"
+                      className="px-2.5 py-1 bg-red-950/40 border border-red-900/30 hover:bg-red-950 text-red-400 font-bold rounded text-[9px] uppercase transition-colors"
                     >
                       Delete Asset
                     </button>

@@ -10,4 +10,5 @@ export interface Notice {
   isHighlighted: boolean;
   publishedAt: string;
   updatedAt: string;
+  pdfUrl?: string;
 }
