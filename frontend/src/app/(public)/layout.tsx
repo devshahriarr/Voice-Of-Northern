@@ -1,6 +1,6 @@
 import React from "react";
-import Link from "next/link";
 import Button from "@/components/ui/button";
+import Link from "next/link";
 
 export default function PublicLayout({
   children,
@@ -32,12 +32,16 @@ export default function PublicLayout({
             </Link>
           </nav>
           <div className="flex items-center gap-3">
-            <Button variant="ghost" size="sm">
-              Log In
-            </Button>
-            <Button variant="primary" size="sm">
-              Register
-            </Button>
+            <Link href="/login" tabIndex={-1}>
+              <Button variant="ghost" size="sm">
+                Log In
+              </Button>
+            </Link>
+            <Link href="/register" tabIndex={-1}>
+              <Button variant="primary" size="sm">
+                Register
+              </Button>
+            </Link>
           </div>
         </div>
       </header>
