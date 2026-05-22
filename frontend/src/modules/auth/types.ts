@@ -1,4 +1,3 @@
-// Strict User Roles aligned with production grade SRS
 export type UserRole =
     | 'SUPER_ADMIN'
     | 'ADMIN'
@@ -6,17 +5,19 @@ export type UserRole =
     | 'COMPLAINT_OFFICER'
     | 'EVENT_MANAGER'
     | 'CONTENT_WRITER'
-    // | 'GENERAL_MEMBER';[cite: 124 - 173]
     | 'GENERAL_MEMBER';
+
+export type AccountStatus = 'PENDING' | 'APPROVED' | 'REJECTED';
 
 export interface UserSession {
     id: string;
     name: string;
     email: string;
     role: UserRole;
-    studentId?: string;[cite: 252]
-    department?: string;[cite: 251]
-    isVerified: boolean;[cite: 259]
+    studentId: string;
+    department: string;
+    batch: string;
+    status: AccountStatus; // Merged status directly to session
 }
 
 export interface AuthState {

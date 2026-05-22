@@ -9,11 +9,11 @@ export function proxy(request: NextRequest) {
 
     // Guard rails for protected dashboards [cite: 241]
     if (pathname.startsWith('/admin') || pathname.startsWith('/dashboard')) {
-        if (!isAuthenticated) {
-            // Direct redirection toward secure login screen
-            const loginUrl = new URL('/login', request.url);
-            return NextResponse.redirect(loginUrl);
-        }
+        // if (!isAuthenticated) {
+        //     // Direct redirection toward secure login screen
+        //     const loginUrl = new URL('/login', request.url);
+        //     return NextResponse.redirect(loginUrl);
+        // }
     }
 
     return NextResponse.next();

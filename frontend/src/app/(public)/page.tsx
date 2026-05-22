@@ -20,7 +20,7 @@ export default function HomePage() {
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
                         <Link
-                            href="/register"
+                            href="/dashboard/membership"
                             className="w-full sm:w-auto px-8 py-3.5 text-sm font-semibold text-slate-950 bg-cyan-400 hover:bg-cyan-300 transition-all rounded-lg text-center shadow-lg shadow-cyan-500/10"
                         >
                             Become Member
@@ -49,8 +49,8 @@ export default function HomePage() {
                         <div
                             key={notice.id}
                             className={`p-6 rounded-xl border transition-all ${notice.priority === 'URGENT'
-                                    ? 'bg-gradient-to-br from-slate-900 to-orange-950/20 border-orange-500/30'
-                                    : 'bg-slate-900/60 border-slate-800'
+                                ? 'bg-gradient-to-br from-slate-900 to-orange-950/20 border-orange-500/30'
+                                : 'bg-slate-900/60 border-slate-800'
                                 }`}
                         >
                             <div className="flex items-center gap-3 mb-4">
