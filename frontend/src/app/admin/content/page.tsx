@@ -9,7 +9,7 @@ interface ExtendedPost extends BlogPost {
 
 export default function AdminContentPage() {
   const [posts, setPosts] = useState<ExtendedPost[]>(initialPosts);
-  const [activeFilter, setActiveFilter] = useState<'ALL' | 'BLOG' | 'MAGAZINE' | 'NOTICE'>('ALL');
+  const [activeFilter, setActiveFilter] = useState<'ALL' | 'BLOG' | 'MAGAZINE' | 'PENDING'>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
 
   // Selected post for workspace composer
@@ -136,8 +136,9 @@ export default function AdminContentPage() {
 
   const filtered = posts.filter(p => {
     const matchesFilter = activeFilter === 'ALL' ||
-      (activeFilter === 'BLOG' && p.type !== 'MAGAZINE') || // Treat defaults as blog
-      (activeFilter === 'MAGAZINE' && p.type === 'MAGAZINE');
+      (activeFilter === 'BLOG' && p.type !== 'MAGAZINE') ||
+      (activeFilter === 'MAGAZINE' && p.type === 'MAGAZINE') ||
+      (activeFilter === 'PENDING' && p.status === 'PENDING');
     const matchesQuery = p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.content.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesFilter && matchesQuery;
@@ -171,6 +172,39 @@ export default function AdminContentPage() {
                 Clear Workspace & New Draft
               </button>
             </div>
+
+            {selectedPost && selectedPost.status === 'PENDING' && (
+              <div className="p-4 bg-amber-950/40 border border-amber-500/20 rounded-xl flex items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <span className="px-2 py-0.5 bg-amber-950 border border-amber-900 rounded text-[9px] font-black text-amber-400">PENDING REVIEW</span>
+                  <p className="text-[11px] text-slate-300">
+                    Submitted by student <span className="font-bold text-white">{selectedPost.author.name}</span>. Review details and approve/reject.
+                  </p>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPosts(prev => prev.map(p => p.id === selectedPost.id ? { ...p, status: 'APPROVED' } : p));
+                      setSelectedPost(prev => prev ? { ...prev, status: 'APPROVED' } : null);
+                    }}
+                    className="px-3 py-1.5 bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black rounded-lg text-[10px] uppercase transition-colors"
+                  >
+                    Approve
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPosts(prev => prev.map(p => p.id === selectedPost.id ? { ...p, status: 'REJECTED' } : p));
+                      setSelectedPost(prev => prev ? { ...prev, status: 'REJECTED' } : null);
+                    }}
+                    className="px-3 py-1.5 bg-slate-900 border border-red-900/30 text-red-400 hover:bg-red-950 font-black rounded-lg text-[10px] uppercase transition-colors"
+                  >
+                    Reject
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* Metadata Fields */}
             <div className="grid gap-4 sm:grid-cols-2 text-xs">
@@ -340,7 +374,7 @@ export default function AdminContentPage() {
             </div>
 
             <div className="flex gap-2">
-              {(['ALL', 'BLOG', 'MAGAZINE'] as const).map(tab => (
+              {(['ALL', 'BLOG', 'MAGAZINE', 'PENDING'] as const).map(tab => (
                 <button
                   key={tab}
                   onClick={() => setActiveFilter(tab)}

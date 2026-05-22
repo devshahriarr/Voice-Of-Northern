@@ -38,7 +38,15 @@ export default function RegisterPage() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4 py-16 text-slate-100">
+        <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center px-4 py-16 text-slate-100 relative">
+            
+            {/* Back to Home floating action */}
+            <div className="absolute top-6 left-6">
+                <Link href="/" className="text-xs text-slate-500 hover:text-cyan-400 font-bold transition-colors">
+                    ← Back to Home
+                </Link>
+            </div>
+
             <div className="w-full max-w-lg p-8 bg-slate-900/50 border border-slate-900 rounded-2xl space-y-6">
                 <div className="text-center space-y-2">
                     <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-white">Join Voice of Northern</h1>

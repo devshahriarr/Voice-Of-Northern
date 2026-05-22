@@ -245,6 +245,35 @@ export default function AdminEventsPage() {
                 )}
               </div>
 
+              <div className="space-y-1 text-xs">
+                <label className="font-bold text-slate-350">Upload Event Banner Image (Max 5MB)</label>
+                <div className="relative border border-dashed border-slate-800 rounded-xl p-3 bg-slate-950 text-center text-[10px] text-slate-500 cursor-pointer">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="absolute inset-0 opacity-0 cursor-pointer"
+                    onChange={e => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        if (file.size > 5 * 1024 * 1024) {
+                          alert('File size exceeds the 5MB limit.');
+                          return;
+                        }
+                        if (!file.type.startsWith('image/')) {
+                          alert('Only image files are allowed.');
+                          return;
+                        }
+                        setNewEvent(prev => ({
+                          ...prev,
+                          bannerImage: URL.createObjectURL(file)
+                        }));
+                      }
+                    }}
+                  />
+                  <span>{newEvent.bannerImage.startsWith('blob:') ? '✓ Loaded Local Image File' : 'Click to bind banner snapshot'}</span>
+                </div>
+              </div>
+
               <button
                 type="submit"
                 className="w-full py-2.5 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black rounded-xl transition-all"

@@ -172,8 +172,8 @@ export default function PublicEventRegistrationFormPage({ params }: { params: Pr
                                 </div>
 
                                 <div className="space-y-1">
-                                    <label className="text-[11px] font-semibold text-slate-400">Upload Receipt Screenshot (Optional)</label>
-                                    <div className="border border-dashed border-slate-800 rounded-xl p-2.5 bg-slate-950 text-center text-[10px] text-slate-500 cursor-pointer">
+                                    <label className="text-[11px] font-semibold text-slate-400 font-sans">Upload Receipt Screenshot (Optional)</label>
+                                    <div className="relative border border-dashed border-slate-800 rounded-xl p-2.5 bg-slate-950 text-center text-[10px] text-slate-500 cursor-pointer">
                                         <input type="file" accept="image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={(e) => e.target.files && setScreenshot(e.target.files[0])} />
                                         <span>{screenshot ? `Ready: ${screenshot.name}` : 'Click to bind optional verification snapshot'}</span>
                                     </div>

@@ -108,7 +108,7 @@ export default function HomePage() {
                 href="/register"
                 className="px-8 py-4 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black rounded-xl text-center text-xs uppercase tracking-wider transition-all shadow-lg shadow-cyan-400/15 hover:scale-[1.02]"
               >
-                Join the Movement
+                Become a Member
               </Link>
               <a
                 href="#feed"
@@ -418,7 +418,7 @@ export default function HomePage() {
               href="/register" 
               className="px-6 py-3 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black rounded-xl text-xs uppercase transition-all"
             >
-              Sign Up Now
+              Become a Member
             </Link>
             <Link 
               href="/complaints" 
